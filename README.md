@@ -1,2 +1,2 @@
 # SistemadeCadastroJsp-
-Um sistema de Cadastros usando Jsp, Java, MySQL(CRUD Completo)
+Um sistema de Cadastros de produtos e usuarios usando Jsp, Java, MySQL(CRUD Completo)
