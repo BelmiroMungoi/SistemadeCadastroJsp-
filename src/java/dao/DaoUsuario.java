@@ -25,16 +25,22 @@ public class DaoUsuario {
     public void salvarUsuario(BeansUsuario usuario) {
         try {
             String sql = "insert into usuario(nomeCompleto, biUser, telefoneUser, "
-                    + "nomeUser, senhaUser) values(?,?,?,?,?)";
+                    + "nomeUser, senhaUser, imagem, curriculo, contentType, contentTypeCv)"
+                    + " values(?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.setString(1, usuario.getNomeCompleto());
             pst.setString(2, usuario.getBiUser());
             pst.setString(3, usuario.getTelefone());
             pst.setString(4, usuario.getNomeUser());
             pst.setString(5, usuario.getSenha());
+            pst.setString(6, usuario.getImagem());
+            pst.setString(7, usuario.getCurriculo());
+            pst.setString(8, usuario.getContentType());
+            pst.setString(9, usuario.getContentTypeCv());
             pst.execute();
             connection.commit();
         } catch (SQLException ex) {
+            ex.printStackTrace();
             try {
                 connection.rollback();
             } catch (SQLException ex1) {
@@ -59,6 +65,10 @@ public class DaoUsuario {
                 usuario.setTelefone(rs.getString("telefoneUser"));
                 usuario.setNomeUser(rs.getString("nomeUser"));
                 usuario.setSenha(rs.getString("senhaUser"));
+                usuario.setImagem(rs.getString("imagem"));
+                usuario.setCurriculo(rs.getString("curriculo"));
+                usuario.setContentType(rs.getString("contentType"));
+                usuario.setContentTypeCv(rs.getString("contentTypeCv"));
                 lista.add(usuario);
             }
         } catch (SQLException ex) {
@@ -97,6 +107,10 @@ public class DaoUsuario {
                 beansUsuario.setTelefone(rs.getString("telefoneUser"));
                 beansUsuario.setNomeUser(rs.getString("nomeUser"));
                 beansUsuario.setSenha(rs.getString("senhaUser"));
+                beansUsuario.setImagem(rs.getString("imagem"));
+                beansUsuario.setCurriculo(rs.getString("curriculo"));
+                beansUsuario.setContentType(rs.getString("contentType"));
+                beansUsuario.setContentTypeCv(rs.getString("contentTypeCv"));
                 return beansUsuario;
             }
         } catch (SQLException ex) {
@@ -109,7 +123,7 @@ public class DaoUsuario {
     *O metodo ira verificar se ja existe algum usuario com o mesmo nome
     *Caso exista nao ira gravar os dados
     *caso na ira gravar
-     */
+    */
     public boolean validaUsuario(String nomeUser) {
         try {
             String sql = "select count(1) as qtd from usuario where nomeUser = '" + nomeUser + "'";
@@ -177,19 +191,25 @@ public class DaoUsuario {
     public void actualiza(BeansUsuario usuario) {
         try {
             String sql = "update usuario set nomeCompleto = ?, biUser = ?,"
-                    + "telefoneUser = ?, nomeUser = ?, senhaUser = ? where idUser = ?";
+                    + "telefoneUser = ?, nomeUser = ?, senhaUser = ?, imagem = ?,"
+                    + "curriculo = ? ,contentType = ?, contentTypeCv = ? where idUser = ?";
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.setString(1, usuario.getNomeCompleto());
             pst.setString(2, usuario.getBiUser());
             pst.setString(3, usuario.getTelefone());
             pst.setString(4, usuario.getNomeUser());
             pst.setString(5, usuario.getSenha());
-            pst.setInt(6, usuario.getIdUser());
+            pst.setString(6, usuario.getImagem());
+            pst.setString(7, usuario.getCurriculo());
+            pst.setString(8, usuario.getContentType());
+            pst.setString(9, usuario.getContentTypeCv());
+            pst.setInt(10, usuario.getIdUser());
             pst.execute();
             connection.commit();
         } catch (SQLException ex) {
             try {
                 connection.rollback();
+                ex.printStackTrace();
             } catch (SQLException ex1) {
                 ex1.printStackTrace();
             }
