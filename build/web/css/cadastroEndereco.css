@@ -1,8 +1,8 @@
-
 /* 
-    Created on : Dec 22, 2020, 12:46:35 PM
+    Created on : Feb 14, 2021, 5:34:48 PM
     Author     : Belmiro-Mungoi
 */
+
 header {
     display: flex;
     align-items: center;
@@ -39,7 +39,7 @@ form h1{
     font-size: 28px;
     font-weight: bolder;
     padding: 5px;
-    margin: -35px -30px 5px -30px;
+    margin: -30px -30px 5px -30px;
 }
 
 h2{
@@ -61,8 +61,9 @@ form .field-group {
 form .field-group .field + .field {
     margin-left: 12px;
 }
-form input[type = "text"],
-form input[type = "password"]{
+form input[type="text"],
+form input[type="password"]
+{
     box-sizing: border-box;
     background-color: #f0f0f5;
     display: flex;
@@ -75,31 +76,28 @@ form input[type = "password"]{
 }
 
 
-#idUser{
+#idEnder, #idUser1{
     width: 100px;
 }
-
-#nomeFull{
-    width: 420px;
+#nomeUser{
+    margin-left: 0px;
+    width: 400px;
+    font:italic, background-color red;
 }
-#foneUser{
-    width: 210px;
-}
-
-#pass{
-    width: 230px;
+#foneNr, #foneNr2{
+    width: 220px;
 }
 
 #salvar{
     width: 150px;
-    height: 30px;
+    height: 35px;
     background-color: darkcyan;
     border-radius: 8px;
     color: white;
     font-weight: bold;
     font-size: 16px;
     transition: 700ms;
-    margin-bottom: -20px;
+    margin-bottom: -10px;
 }
 
 #salvar:hover{ 
@@ -108,7 +106,7 @@ form input[type = "password"]{
 
 #canc{
     width: 150px;
-    height: 30px;
+    height: 35px;
     background-color: #ff4040;
     border-radius: 8px;
     color: white;
@@ -148,3 +146,4 @@ th {
     background-color: rgb(0,153,153);
     color: white;
 }
+

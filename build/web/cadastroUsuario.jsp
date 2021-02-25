@@ -22,30 +22,33 @@
             <a href="index.jsp">Sair</a>
         </header>
         <form action="UsuarioServlet" method="post" autocomplete="off" id="formUser"
-              >
+              enctype="multipart/form-data">
             <h1>Cadastro de Usuário</h1>
             <center><h2>${msg}</h2></center>
             <div class="field">
-                <label for="idUser">ID</label>
+                <label for="id">ID</label>
                 <input type="text" readonly="readonly" id="idUser" name="idUser" value="${user.idUser}">
             </div>
-            <div class="field">
-                <label for="nomeFull">Nome Completo</label>
-                <input type="text" id="nomeFull" name="nomeFull" value="${user.nomeCompleto}">
-            </div>
-
             <div class="field-group">
+                <div class="field">
+                    <label for="nomeFull">Nome Completo</label>
+                    <input type="text" id="nomeFull" name="nomeFull" value="${user.nomeCompleto}">
+                </div>
+
                 <div class="field">
                     <label for="biUser">BI</label>
                     <input type="text" id="biUser" name="biUser" value="${user.biUser}">
                 </div>
+            </div>
+
+
+            <div class="field-group">
 
                 <div class="field">
                     <label for="foneUser">Telefone</label>
                     <input type="text" id="foneUser" name="foneUser" value="${user.telefone}">
                 </div>
-            </div>    
-            <div class="field-group">
+
                 <div class="field">
                     <label for="nomeUser">Nome do Usuário</label>
                     <input type="text" id="nomeUser" name="nomeUser" value="${user.nomeUser}">
@@ -56,7 +59,21 @@
                     <input type="password" id="pass" name="pass" value="${user.senha}">
                 </div>
 
-            </div>
+            </div>    
+            <div class="field-group">
+                <div class="field">
+                    <label for="foto">Foto</label>
+                    <input type="file" name="foto">
+                    <input type="text" name="fotoUser" style="display: none" value="${user.imagem}">
+                    <input type="text" name="content" style="display: none" value="${user.contentType}">
+                </div>
+                <div class="field">
+                    <label for="curriculo">Curriculo</label>
+                    <input type="file" name="curriculo">
+                    <input type="text" name="cvUser" style="display: none" value="${user.curriculo}">
+                    <input type="text" name="contentCv" style="display: none" value="${user.contentTypeCv}">
+                </div>
+            </div>    
             <button type="submit" id="salvar"
                     onclick="return validarCampos() ? true : false">Salvar</button>
             <button type="submit" id="canc" 
@@ -69,7 +86,9 @@
             <caption>Usuários Cadastrados</caption>
             <tr>
                 <th>ID</th>
-                <th>Nome Completo</th>
+                <th></th>
+                <th></th>
+                <th>Nome Completo</th>                
                 <th>BI</th>
                 <th>Telefone</th>
                 <th>Nome Usuário</th>
@@ -78,6 +97,11 @@
             <c:forEach items="${usuarios}" var="user">
                 <tr id="tr2">
                     <td id="td1"><c:out value="${user.idUser}"></c:out></td>
+                    <td id="td1"><a href="UsuarioServlet?accao=download&type=imagem&user=${user.idUser}">
+                            <img src="<c:out value="${user.tempFoto}">                                         
+                                 </c:out>" width="32px" height="32px"></a></td>
+                    <td id="td1"><a href="UsuarioServlet?accao=download&type=curriculo&user=${user.idUser}">                                                               
+                            CV</a></td>
                     <td id="td1"><c:out value="${user.nomeCompleto}"></c:out></td>
                     <td id="td1"><c:out value="${user.biUser}"></c:out></td>
                     <td id="td1"><c:out value="${user.telefone}"></c:out></td>
@@ -87,6 +111,8 @@
                             <img src="css/img/delete.png" width="20px" height="20px" title="Exlcuir"></a>
                         <a href="UsuarioServlet?accao=edit&user=${user.idUser}">
                             <img src="css/img/edit.png" width="20px" height="20px" title="Editar"></a>
+                        <a href="EnderecoServlet?accao=listar&user=${user.idUser}">
+                            <img src="css/img/adresss.png" width="20px" height="20px" title="Add Endereco"></a>
                     </td>
                 </tr>
             </c:forEach>
