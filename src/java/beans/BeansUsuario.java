@@ -11,7 +11,50 @@ public class BeansUsuario {
     private String telefone;
     private String nomeUser;
     private String senha;
+    private String imagem;
+    private String curriculo;
+    private String contentType;
+    private String contentTypeCv;
+    private String tempFoto;
     private Integer idUser;
+
+    public String getTempFoto() {
+        tempFoto = "data:" + contentType + ";base64," + imagem;
+
+        return tempFoto;
+    }
+
+    public String getCurriculo() {
+        return curriculo;
+    }
+
+    public void setCurriculo(String curriculo) {
+        this.curriculo = curriculo;
+    }
+
+    public String getContentTypeCv() {
+        return contentTypeCv;
+    }
+
+    public void setContentTypeCv(String contentTypeCv) {
+        this.contentTypeCv = contentTypeCv;
+    }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
 
     public String getNomeCompleto() {
         return nomeCompleto;
