@@ -72,6 +72,8 @@
             </div>
             <button type="submit" id="salvar"
                     onclick="return validarCampos() ? true : false">Salvar</button>
+                <button type="submit" id="voltar" onclick="document.getElementById('formEndereco').action
+                            = 'EnderecoServlet?accao=voltar'">Voltar</button>
         </form>
     <center>
         <table id="table1">
