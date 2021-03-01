@@ -97,11 +97,21 @@
             <c:forEach items="${usuarios}" var="user">
                 <tr id="tr2">
                     <td id="td1"><c:out value="${user.idUser}"></c:out></td>
-                    <td id="td1"><a href="UsuarioServlet?accao=download&type=imagem&user=${user.idUser}">
-                            <img src="<c:out value="${user.tempFoto}">                                         
-                                 </c:out>" width="32px" height="32px"></a></td>
-                    <td id="td1"><a href="UsuarioServlet?accao=download&type=curriculo&user=${user.idUser}">                                                               
-                            CV</a></td>
+                    <c:if test="${user.imagem.isEmpty() == false}"> 
+                          <td id="td1"><a href="UsuarioServlet?accao=download&type=imagem&user=${user.idUser}">
+                                  <img src="<c:out value="${user.tempFoto}">                                         
+                                      </c:out>" width="32px" height="32px"></a></td>
+                    </c:if>
+                    <c:if test="${user.imagem.isEmpty() == true}">
+                        <td><img src="css/img/user.png" width="32px" height="32px"></td>
+                    </c:if> 
+                    <c:if test="${user.curriculo.isEmpty() == false}"> 
+                        <td id="td1"><a href="UsuarioServlet?accao=download&type=curriculo&user=${user.idUser}">                                                               
+                                <img src="css/img/pdf.png" width="32px" height="32px"></a></td>
+                    </c:if>
+                    <c:if test="${user.curriculo.isEmpty() == true}">
+                        <td><img src="css/img/pdf.png" width="32px" height="32px"></td>
+                    </c:if>        
                     <td id="td1"><c:out value="${user.nomeCompleto}"></c:out></td>
                     <td id="td1"><c:out value="${user.biUser}"></c:out></td>
                     <td id="td1"><c:out value="${user.telefone}"></c:out></td>
