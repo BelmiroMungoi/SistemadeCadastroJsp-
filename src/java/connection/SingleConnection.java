@@ -9,18 +9,14 @@ import java.sql.DriverManager;
  */
 public class SingleConnection {
 
-    private static String url = "jdbc:mysql://localhost:3306/projectoJsp?autoReconnect=true";
+    private static String url = "jdbc:mysql://localhost:3306/projectoJsp";
     private static String user = "root";
     private static String password = "";
     private static String driver = "com.mysql.jdbc.Driver";
     private static Connection connection = null;
 
     static {
-        try {
-            connect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        connect();
     }
 
     public SingleConnection() {
@@ -36,7 +32,7 @@ public class SingleConnection {
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao conectar a base de dados");
+            e.printStackTrace();
         }
     }
 
