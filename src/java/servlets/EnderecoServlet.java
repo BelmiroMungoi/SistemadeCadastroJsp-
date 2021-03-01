@@ -77,27 +77,36 @@ public class EnderecoServlet extends HttpServlet {
         String bairro = request.getParameter("bairro");
         String foneNr = request.getParameter("foneNr");
         String foneNr2 = request.getParameter("foneNr2");
+        String accao = request.getParameter("accao");
 
-        endereco.setIdEnder(!idEnder.isEmpty() ? Integer.parseInt(idEnder) : null);
-        endereco.setEnderecoId(!idUser1.isEmpty() ? Integer.parseInt(idUser1) : null);
-        endereco.setProvincia(provincia);
-        endereco.setDistrito(distrito);
-        endereco.setBairro(bairro);
-        endereco.setMobile(foneNr);
-        endereco.setMobile2(foneNr2);
+        if (accao == null || !accao.equals("voltar")) {
 
-        if (idEnder.isEmpty() || idEnder == null) {
-            daoEndereco.salvarEndereco(endereco);
-            
-        } else if(!idEnder.isEmpty() || idEnder == null){
-            daoEndereco.actualiza(endereco);
+            endereco.setIdEnder(!idEnder.isEmpty() ? Integer.parseInt(idEnder) : null);
+            endereco.setEnderecoId(!idUser1.isEmpty() ? Integer.parseInt(idUser1) : null);
+            endereco.setProvincia(provincia);
+            endereco.setDistrito(distrito);
+            endereco.setBairro(bairro);
+            endereco.setMobile(foneNr);
+            endereco.setMobile2(foneNr2);
+
+            if (idEnder.isEmpty() || idEnder == null) {
+                daoEndereco.salvarEndereco(endereco);
+
+            } else if (!idEnder.isEmpty() || idEnder == null) {
+                daoEndereco.actualiza(endereco);
+            }
+
+            RequestDispatcher view
+                    = request.getRequestDispatcher("/cadastroEndereco.jsp");
+            request.setAttribute("endereco", daoEndereco.listarEndereco());
+            view.forward(request, response);
+
+        } else {
+            RequestDispatcher view
+                    = request.getRequestDispatcher("/cadastroUsuario.jsp");
+            request.setAttribute("usuarios", dao.listarUsuario());
+            view.forward(request, response);
         }
-
-        RequestDispatcher view
-                = request.getRequestDispatcher("/cadastroEndereco.jsp");
-        request.setAttribute("endereco", daoEndereco.listarEndereco());
-        view.forward(request, response);
-
     }
 
 }
