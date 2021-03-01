@@ -37,16 +37,25 @@ public class LoginServlet extends HttpServlet {
             String nome = request.getParameter("nome");
             String pass = request.getParameter("pass");
 
-            if (daoUsuario.validarLogin(nome, pass)) {
-                RequestDispatcher dispatcher
-                        = request.getRequestDispatcher("acessoLiberado.jsp");
-                dispatcher.forward(request, response);
+            if (nome != null && !nome.isEmpty()
+                    && pass != null && !pass.isEmpty()) {
+                if (daoUsuario.validarLogin(nome, pass)) {
+                    RequestDispatcher dispatcher
+                            = request.getRequestDispatcher("acessoLiberado.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    request.setAttribute("msgs", "Usuário ou Senha Inválidos!!!");
+                    RequestDispatcher dispatcher
+                            = request.getRequestDispatcher("index.jsp");
+                    dispatcher.forward(request, response);
+                }
             } else {
-                request.setAttribute("msgs", "Usuário ou Senha Inválidos!!!");
+                request.setAttribute("msgs", "Preencha todos os campos!!!");
                 RequestDispatcher dispatcher
                         = request.getRequestDispatcher("index.jsp");
                 dispatcher.forward(request, response);
             }
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
