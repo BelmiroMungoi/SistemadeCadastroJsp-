@@ -6,11 +6,14 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="f" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/cadastroProduto.css">
+        <script src="js/jquery.min.js" type="text/javascript"></script>
+        <script src="js/jquery.maskMoney.min.js" type="text/javascript"></script>
         <title>Cadastro de Produto</title>
     </head>
     <body>
@@ -36,11 +39,12 @@
                 <div class="field-group">
                     <div class="field">
                         <label for="quantProd">Quantidade</label>
-                        <input type="text" id="quantProd" name="quantProd" value="${prod.quantProd}">
+                        <input type="number" id="quantProd" name="quantProd" value="${prod.quantProd}">
                     </div>
                     <div class="field">
                         <label for="valorProd">Valor(MZN)</label>
-                        <input type="text" id="valorProd" name="valorProd" value="${prod.valorProd}">
+                        <input type="text" id="valorProdd" name="valorProd" data-thousands=","
+                               data-decimal="." value="${prod.valorProd}">
                     </div>
                 </div>
             </div>
@@ -65,7 +69,7 @@
                     <td id="td1"><c:out value="${prod.idProd}"></c:out></td>
                     <td id="td1"><c:out value="${prod.nomeProd}"></c:out></td>
                     <td id="td1"><c:out value="${prod.quantProd}"></c:out></td>
-                    <td id="td1"><c:out value="${prod.valorProd}"></c:out></td>
+                    <td id="td1"><f:formatNumber type="number" maxFractionDigits="2" value="${prod.valorProd}"/></td>
                         <td id="td1">
                             <a href="ProdutoServlet?accao=delete&prod=${prod.idProd}">
                             <img src="css/img/delete.png" width="20px" height="20px" title="Exlcuir"></a>
@@ -96,6 +100,11 @@
             }
             return true;
         }
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('#valorProdd').maskMoney();
+        })
     </script>
 </body>
 </html>
