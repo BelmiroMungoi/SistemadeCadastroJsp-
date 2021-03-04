@@ -42,6 +42,7 @@ public class ProdutoServlet extends HttpServlet {
             RequestDispatcher view
                     = request.getRequestDispatcher("/cadastroProduto.jsp");
             request.setAttribute("prod", beansProduto);
+            request.setAttribute("produtos", daoProduto.listarProduto());
             view.forward(request, response);
 
         } else if (accao.equals("listar")) {
@@ -79,7 +80,9 @@ public class ProdutoServlet extends HttpServlet {
                 
             }
             if (valorProd != null && !valorProd.isEmpty()) {
-                produto.setValorProd(Float.parseFloat(valorProd));
+                String valor = valorProd.replaceAll("\\,", "");
+                //valor = valor.replaceAll("\\", ".");
+                produto.setValorProd(Float.parseFloat(valor));
                 
             }
             boolean podeInserir = true;
