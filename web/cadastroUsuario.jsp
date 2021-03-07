@@ -97,12 +97,12 @@
             <c:forEach items="${usuarios}" var="user">
                 <tr id="tr2">
                     <td id="td1"><c:out value="${user.idUser}"></c:out></td>
-                    <c:if test="${user.imagem.isEmpty() == false}"> 
+                    <c:if test="${user.imagemMini.isEmpty() == false}"> 
                           <td id="td1"><a href="UsuarioServlet?accao=download&type=imagem&user=${user.idUser}">
-                                  <img src="<c:out value="${user.tempFoto}">                                         
+                                  <img src="<c:out value="${user.imagemMini}">                                         
                                       </c:out>" width="32px" height="32px"></a></td>
                     </c:if>
-                    <c:if test="${user.imagem.isEmpty() == true}">
+                    <c:if test="${user.imagemMini.isEmpty() == true}">
                         <td><img src="css/img/user.png" width="32px" height="32px"></td>
                     </c:if> 
                     <c:if test="${user.curriculo.isEmpty() == false}"> 
