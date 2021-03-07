@@ -32,7 +32,7 @@ public class EnderecoServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            String accao = request.getParameter("accao");
+            String accao = request.getParameter("accao") != null ? request.getParameter("accao") : "listar";
             String user = request.getParameter("user");
             BeansUsuario usuario = dao.consulta(user);
 
