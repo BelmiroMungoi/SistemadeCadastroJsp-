@@ -25,8 +25,8 @@ public class DaoUsuario {
     public void salvarUsuario(BeansUsuario usuario) {
         try {
             String sql = "insert into usuario(nomeCompleto, biUser, telefoneUser, "
-                    + "nomeUser, senhaUser, imagem, curriculo, contentType, contentTypeCv)"
-                    + " values(?,?,?,?,?,?,?,?,?)";
+                    + "nomeUser, senhaUser, imagem, curriculo, contentType, contentTypeCv, imageMin)"
+                    + " values(?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.setString(1, usuario.getNomeCompleto());
             pst.setString(2, usuario.getBiUser());
@@ -37,6 +37,7 @@ public class DaoUsuario {
             pst.setString(7, usuario.getCurriculo());
             pst.setString(8, usuario.getContentType());
             pst.setString(9, usuario.getContentTypeCv());
+            pst.setString(10, usuario.getImagemMini());
             pst.execute();
             connection.commit();
         } catch (SQLException ex) {
@@ -65,10 +66,11 @@ public class DaoUsuario {
                 usuario.setTelefone(rs.getString("telefoneUser"));
                 usuario.setNomeUser(rs.getString("nomeUser"));
                 usuario.setSenha(rs.getString("senhaUser"));
-                usuario.setImagem(rs.getString("imagem"));
+                //usuario.setImagem(rs.getString("imagem"));
                 usuario.setCurriculo(rs.getString("curriculo"));
                 usuario.setContentType(rs.getString("contentType"));
                 usuario.setContentTypeCv(rs.getString("contentTypeCv"));
+                usuario.setImagemMini(rs.getString("imageMin"));
                 lista.add(usuario);
             }
         } catch (SQLException ex) {
@@ -111,6 +113,7 @@ public class DaoUsuario {
                 beansUsuario.setCurriculo(rs.getString("curriculo"));
                 beansUsuario.setContentType(rs.getString("contentType"));
                 beansUsuario.setContentTypeCv(rs.getString("contentTypeCv"));
+                beansUsuario.setImagemMini(rs.getString("imageMin"));
                 return beansUsuario;
             }
         } catch (SQLException ex) {
@@ -123,7 +126,7 @@ public class DaoUsuario {
     *O metodo ira verificar se ja existe algum usuario com o mesmo nome
     *Caso exista nao ira gravar os dados
     *caso na ira gravar
-    */
+     */
     public boolean validaUsuario(String nomeUser) {
         try {
             String sql = "select count(1) as qtd from usuario where nomeUser = '" + nomeUser + "'";
@@ -192,7 +195,7 @@ public class DaoUsuario {
         try {
             String sql = "update usuario set nomeCompleto = ?, biUser = ?,"
                     + "telefoneUser = ?, nomeUser = ?, senhaUser = ?, imagem = ?,"
-                    + "curriculo = ? ,contentType = ?, contentTypeCv = ? where idUser = ?";
+                    + "curriculo = ? ,contentType = ?, contentTypeCv = ?, imageMin = ? where idUser = ?";
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.setString(1, usuario.getNomeCompleto());
             pst.setString(2, usuario.getBiUser());
@@ -203,7 +206,8 @@ public class DaoUsuario {
             pst.setString(7, usuario.getCurriculo());
             pst.setString(8, usuario.getContentType());
             pst.setString(9, usuario.getContentTypeCv());
-            pst.setInt(10, usuario.getIdUser());
+            pst.setString(10, usuario.getImagemMini());
+            pst.setInt(11, usuario.getIdUser());
             pst.execute();
             connection.commit();
         } catch (SQLException ex) {
