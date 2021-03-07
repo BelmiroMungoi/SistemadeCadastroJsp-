@@ -12,6 +12,7 @@ public class BeansUsuario {
     private String nomeUser;
     private String senha;
     private String imagem;
+    private String imagemMini;
     private String curriculo;
     private String contentType;
     private String contentTypeCv;
@@ -22,6 +23,14 @@ public class BeansUsuario {
         tempFoto = "data:" + contentType + ";base64," + imagem;
 
         return tempFoto;
+    }
+
+    public String getImagemMini() {
+        return imagemMini;
+    }
+
+    public void setImagemMini(String imagemMini) {
+        this.imagemMini = imagemMini;
     }
 
     public String getCurriculo() {
