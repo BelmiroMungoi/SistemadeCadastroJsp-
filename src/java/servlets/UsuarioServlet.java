@@ -2,6 +2,7 @@ package servlets;
 
 import beans.BeansUsuario;
 import dao.DaoUsuario;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.xml.bind.DatatypeConverter;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -150,11 +152,26 @@ public class UsuarioServlet extends HttpServlet {
                         usuario.setContentType(imagem.getContentType());
 
                         //Codigo para a compactacao da imagem para sua exibicao na tela
+                        byte[] imageDecode = new Base64().decodeBase64(fotoBase64);
                         BufferedImage bufferedImage = ImageIO.read(
-                                new ByteArrayInputStream(imagemByte));
+                                new ByteArrayInputStream(imageDecode));
+
+                        //Pega o tipo da imagem
                         int tipo = bufferedImage.getType() == 0
                                 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
-                        BufferedImage newImage = new BufferedImage(32, 32, tipo);
+
+                        // Cria a miniatura da imagem
+                        BufferedImage newImage = new BufferedImage(100, 100, tipo);
+                        Graphics2D gd = newImage.createGraphics();
+                        gd.drawImage(bufferedImage, 0, 0, 100, 100, null);
+                        gd.dispose();
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        ImageIO.write(newImage, "png", baos);
+                        
+                        String minBase64 = "data:image/png;base64,"
+                                + DatatypeConverter.printBase64Binary(baos.toByteArray());
+                        
+                        usuario.setImagemMini(minBase64);
                         //Fim do codigo de compactar a imagem
                     } else {
 
