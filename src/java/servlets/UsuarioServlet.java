@@ -41,7 +41,7 @@ public class UsuarioServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            String accao = request.getParameter("accao");
+            String accao = request.getParameter("accao") != null ? request.getParameter("accao") : "listar";
             String id = request.getParameter("user");
 
             if (accao.equals("delete")) {
