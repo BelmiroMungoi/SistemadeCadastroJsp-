@@ -102,15 +102,15 @@
                                   <img src="<c:out value="${user.imagemMini}">                                         
                                       </c:out>" width="32px" height="32px"></a></td>
                     </c:if>
-                    <c:if test="${user.imagemMini.isEmpty() == true}">
-                        <td><img src="css/img/user.png" width="32px" height="32px"></td>
+                    <c:if test="${user.imagemMini == null}">
+                    <td><img src="css/img/userIcon.png" width="32px" height="32px"></td>
                     </c:if> 
                     <c:if test="${user.curriculo.isEmpty() == false}"> 
                         <td id="td1"><a href="UsuarioServlet?accao=download&type=curriculo&user=${user.idUser}">                                                               
-                                <img src="css/img/pdf.png" width="32px" height="32px"></a></td>
+                                <img src="css/img/pdfIcon.ico" width="35px" height="35px"></a></td>
                     </c:if>
                     <c:if test="${user.curriculo.isEmpty() == true}">
-                        <td><img src="css/img/pdf.png" width="32px" height="32px"></td>
+                        <td><img src="css/img/pdf.png" width="42px" height="42px"></td>
                     </c:if>        
                     <td id="td1"><c:out value="${user.nomeCompleto}"></c:out></td>
                     <td id="td1"><c:out value="${user.biUser}"></c:out></td>
