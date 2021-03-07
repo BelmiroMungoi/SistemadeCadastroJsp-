@@ -55,7 +55,7 @@ public class DaoUsuario {
     public List<BeansUsuario> listarUsuario() {
         List<BeansUsuario> lista = new ArrayList<BeansUsuario>();
         try {
-            String sql = "select *from usuario";
+            String sql = "select *from usuario where nomeUser <> 'admin' ";
             PreparedStatement pst = connection.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
@@ -82,7 +82,7 @@ public class DaoUsuario {
     //Metodo responsavel em excluir dados
     public void excluir(String id) {
         try {
-            String sql = "delete from usuario where idUser = '" + id + "'";
+            String sql = "delete from usuario where idUser = '" + id + "' and nomeUser <> admin";
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.execute();
             connection.commit();
@@ -98,7 +98,7 @@ public class DaoUsuario {
     //Metodo responsavel em buscar dados na base de dados
     public BeansUsuario consulta(String id) {
         try {
-            String sql = "select *from usuario where idUser = '" + id + "'";
+            String sql = "select *from usuario where idUser = '" + id + "' and nomeUser <> 'admin'";
             PreparedStatement pst = connection.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
