@@ -64,14 +64,10 @@
                 <div class="field">
                     <label for="foto">Foto</label>
                     <input type="file" name="foto">
-                    <input type="text" name="fotoUser" style="display: none" value="${user.imagem}">
-                    <input type="text" name="content" style="display: none" value="${user.contentType}">
                 </div>
                 <div class="field">
                     <label for="curriculo">Curriculo</label>
                     <input type="file" name="curriculo">
-                    <input type="text" name="cvUser" style="display: none" value="${user.curriculo}">
-                    <input type="text" name="contentCv" style="display: none" value="${user.contentTypeCv}">
                 </div>
             </div>    
             <button type="submit" id="salvar"
@@ -98,20 +94,20 @@
                 <tr id="tr2">
                     <td id="td1"><c:out value="${user.idUser}"></c:out></td>
                     <c:if test="${user.imagemMini.isEmpty() == false}"> 
-                          <td id="td1"><a href="UsuarioServlet?accao=download&type=imagem&user=${user.idUser}">
-                                  <img src="<c:out value="${user.imagemMini}">                                         
-                                      </c:out>" width="32px" height="32px"></a></td>
-                    </c:if>
-                    <c:if test="${user.imagemMini == null}">
-                    <td><img src="css/img/userIcon.png" width="32px" height="32px"></td>
-                    </c:if> 
-                    <c:if test="${user.curriculo.isEmpty() == false}"> 
+                        <td id="td1"><a href="UsuarioServlet?accao=download&type=imagem&user=${user.idUser}">
+                                <img src="<c:out value="${user.imagemMini}">                                         
+                                     </c:out>" width="32px" height="32px"></a></td>
+                            </c:if>
+                            <c:if test="${user.imagemMini == null}">
+                        <td><img src="css/img/userIcon.png" width="32px" height="32px"></td>
+                        </c:if> 
+                        <c:if test="${user.curriculo.isEmpty() == false}"> 
                         <td id="td1"><a href="UsuarioServlet?accao=download&type=curriculo&user=${user.idUser}">                                                               
                                 <img src="css/img/pdfIcon.ico" width="35px" height="35px"></a></td>
-                    </c:if>
-                    <c:if test="${user.curriculo.isEmpty() == true}">
-                        <td><img src="css/img/pdf.png" width="42px" height="42px"></td>
-                    </c:if>        
+                            </c:if>
+                            <c:if test="${user.curriculo == null}">
+                        <td><img src="css/img/pdf.png" width="32px" height="32px"></td>
+                        </c:if>        
                     <td id="td1"><c:out value="${user.nomeCompleto}"></c:out></td>
                     <td id="td1"><c:out value="${user.biUser}"></c:out></td>
                     <td id="td1"><c:out value="${user.telefone}"></c:out></td>
