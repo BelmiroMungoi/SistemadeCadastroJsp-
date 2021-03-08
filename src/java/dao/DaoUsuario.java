@@ -82,13 +82,14 @@ public class DaoUsuario {
     //Metodo responsavel em excluir dados
     public void excluir(String id) {
         try {
-            String sql = "delete from usuario where idUser = '" + id + "' and nomeUser <> admin";
+            String sql = "delete from usuario where idUser = " + id;
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.execute();
             connection.commit();
         } catch (SQLException ex) {
             try {
                 connection.rollback();
+                ex.printStackTrace();
             } catch (SQLException ex1) {
                 ex1.printStackTrace();
             }
@@ -193,21 +194,58 @@ public class DaoUsuario {
     //metodo responsavel pela actualizacao de dados 
     public void actualiza(BeansUsuario usuario) {
         try {
-            String sql = "update usuario set nomeCompleto = ?, biUser = ?,"
-                    + "telefoneUser = ?, nomeUser = ?, senhaUser = ?, imagem = ?,"
-                    + "curriculo = ? ,contentType = ?, contentTypeCv = ?, imageMin = ? where idUser = ?";
-            PreparedStatement pst = connection.prepareStatement(sql);
+            StringBuilder sql = new StringBuilder();
+            sql.append(" update usuario set nomeCompleto = ?, biUser = ?, ");
+            sql.append(" telefoneUser = ?, nomeUser = ?, senhaUser = ?, ");
+            if (usuario.isUpdateImage()) {
+                sql.append(" imagem = ?, ");
+            }
+            if (usuario.isUpdatePdf()) {
+                sql.append(" curriculo = ?, ");
+            }
+            if (usuario.isUpdateImage()) {
+                sql.append(" contentType = ? ");
+            }
+            if (usuario.isUpdatePdf()) {
+                sql.append(" contentTypeCv = ? ");
+            }
+            if (usuario.isUpdateImage()) {
+                sql.append(" ,imageMin = ? ");
+            }
+            sql.append(" where idUser = " + usuario.getIdUser());
+            PreparedStatement pst = connection.prepareStatement(sql.toString());
             pst.setString(1, usuario.getNomeCompleto());
             pst.setString(2, usuario.getBiUser());
             pst.setString(3, usuario.getTelefone());
             pst.setString(4, usuario.getNomeUser());
             pst.setString(5, usuario.getSenha());
-            pst.setString(6, usuario.getImagem());
-            pst.setString(7, usuario.getCurriculo());
-            pst.setString(8, usuario.getContentType());
-            pst.setString(9, usuario.getContentTypeCv());
-            pst.setString(10, usuario.getImagemMini());
-            pst.setInt(11, usuario.getIdUser());
+            if (usuario.isUpdateImage()) {
+                pst.setString(6, usuario.getImagem());
+            } else if (usuario.isUpdatePdf()) {
+                pst.setString(6, usuario.getCurriculo());
+            }
+
+            if (usuario.isUpdatePdf() && usuario.isUpdateImage()) {
+                pst.setString(7, usuario.getCurriculo());
+            } else if (usuario.isUpdateImage()) {
+                pst.setString(7, usuario.getContentType());
+            }
+
+            if (usuario.isUpdateImage() && usuario.isUpdatePdf()) {
+                pst.setString(8, usuario.getContentType());
+            } else if (usuario.isUpdatePdf()) {
+                pst.setString(7, usuario.getContentTypeCv());
+            }
+
+            if (usuario.isUpdatePdf() && usuario.isUpdateImage()) {
+                pst.setString(9, usuario.getContentTypeCv());
+            } else if (usuario.isUpdateImage()) {
+                pst.setString(8, usuario.getImagemMini());
+            }
+
+            if (usuario.isUpdateImage() && usuario.isUpdatePdf()) {
+                pst.setString(10, usuario.getImagemMini());
+            }
             pst.execute();
             connection.commit();
         } catch (SQLException ex) {
