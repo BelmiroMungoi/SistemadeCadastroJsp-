@@ -174,9 +174,7 @@ public class UsuarioServlet extends HttpServlet {
                         usuario.setImagemMini(minBase64);
                         //Fim do codigo de compactar a imagem
                     } else {
-
-                        usuario.setImagem(request.getParameter("fotoUser"));
-                        usuario.setContentType(request.getParameter("content"));
+                        usuario.setUpdateImage(false);
                     }
 
                     Part curriculo = request.getPart("curriculo");
@@ -186,8 +184,7 @@ public class UsuarioServlet extends HttpServlet {
                         usuario.setCurriculo(curriculoBase64);
                         usuario.setContentTypeCv(curriculo.getContentType());
                     } else {
-                        usuario.setCurriculo(request.getParameter("cvUser"));
-                        usuario.setContentTypeCv(request.getParameter("contentCv"));
+                        usuario.setUpdatePdf(false);
                     }
                 }//Fim do Codigo FileUpload
 
@@ -257,7 +254,7 @@ public class UsuarioServlet extends HttpServlet {
         }
     }
 
-    // Conver
+    // Converte a imagem/pdf para um stream
     private byte[] converteStream(InputStream inputStream) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         int read = inputStream.read();
