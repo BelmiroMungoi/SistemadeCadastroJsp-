@@ -18,11 +18,29 @@ public class BeansUsuario {
     private String contentTypeCv;
     private String tempFoto;
     private Integer idUser;
+    private boolean updateImage = true;
+    private boolean updatePdf = true;
 
     public String getTempFoto() {
         tempFoto = "data:" + contentType + ";base64," + imagem;
 
         return tempFoto;
+    }
+
+    public boolean isUpdateImage() {
+        return updateImage;
+    }
+
+    public void setUpdateImage(boolean updateImage) {
+        this.updateImage = updateImage;
+    }
+
+    public boolean isUpdatePdf() {
+        return updatePdf;
+    }
+
+    public void setUpdatePdf(boolean updatePdf) {
+        this.updatePdf = updatePdf;
     }
 
     public String getImagemMini() {
