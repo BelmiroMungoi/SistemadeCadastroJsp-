@@ -77,12 +77,73 @@
             </div>    
             <div class="field-group">
                 <div class="field">
+                    <label for="perfil">Perfil</label>
+                    <select id="perfil" name="perfil">
+                        <option value="empty">[--Selecione--]</option>  
+                        <option value="admin"
+                                <%
+                                    if (request.getAttribute("user") != null) {
+                                        BeansUsuario user = (BeansUsuario) request.getAttribute("user");
+
+                                        if (user.getPerfil().equalsIgnoreCase("administrador")) {
+                                            out.print(" selected=\"selected\" ");
+                                        }
+                                    }
+                                %>
+                                >Administrador</option>  
+                        <option value="funcionario"
+                                <%
+                                    if (request.getAttribute("user") != null) {
+                                        BeansUsuario user = (BeansUsuario) request.getAttribute("user");
+
+                                        if (user.getPerfil().equalsIgnoreCase("funcionario")) {
+                                            out.print(" selected=\"selected\" ");
+                                        }
+                                    }
+                                %>
+                                >Funcionario</option>
+                        <option value="cliente"
+                                <%
+                                    if (request.getAttribute("user") != null) {
+                                        BeansUsuario user = (BeansUsuario) request.getAttribute("user");
+
+                                        if (user.getPerfil().equalsIgnoreCase("cliente")) {
+                                            out.print(" selected=\"selected\" ");
+                                        }
+                                    }
+                                %>
+                                >Cliente</option>
+                        <option value="estudante"
+                                <%
+                                    if (request.getAttribute("user") != null) {
+                                        BeansUsuario user = (BeansUsuario) request.getAttribute("user");
+
+                                        if (user.getPerfil().equalsIgnoreCase("estudante")) {
+                                            out.print(" selected=\"selected\" ");
+                                        }
+                                    }
+                                %>
+                                >Estudante</option>
+                        <option value="docente"
+                                <%
+                                    if (request.getAttribute("user") != null) {
+                                        BeansUsuario user = (BeansUsuario) request.getAttribute("user");
+
+                                        if (user.getPerfil().equalsIgnoreCase("docente")) {
+                                            out.print(" selected=\"selected\" ");
+                                        }
+                                    }
+                                %>
+                                >Docente</option>
+                    </select>
+                </div>
+                <div class="field">
                     <label for="foto">Foto</label>
-                    <input type="file" name="foto">
+                    <input type="file" id="foto" name="foto">
                 </div>
                 <div class="field">
                     <label for="curriculo">Curriculo</label>
-                    <input type="file" name="curriculo">
+                    <input type="file" id="curriculo" name="curriculo">
                 </div>
             </div>    
             <button type="submit" id="salvar"
@@ -92,6 +153,18 @@
                                     'UsuarioServlet?accao=reset'">Cancelar
             </button>
         </form>
+        <form method="post" action="PesquisaServlet" id="formPesquisa">
+            <center>
+                <div class="field-group" >
+                    <div class="field">
+                        <input type="text" id="pesquisa" name="pesquisa">
+                    </div> 
+                    <div class="field">
+                        <button type="submit" id="pesquisar">Pesquisar</button>
+                    </div>
+                </div>
+            </center>
+        </form>               
     <center>
         <table id="table1">
             <caption>Usuários Cadastrados</caption>
