@@ -32,32 +32,39 @@ public class EnderecoServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            String accao = request.getParameter("accao") != null ? request.getParameter("accao") : "listar";
+            String accao = request.getParameter("accao");
             String user = request.getParameter("user");
             BeansUsuario usuario = dao.consulta(user);
 
-            if (accao.equals("delete")) {
-                daoEndereco.excluir(user);
-                RequestDispatcher dispatcher
-                        = request.getRequestDispatcher("/cadastroEndereco.jsp");
-                request.setAttribute("endereco", daoEndereco.listarEndereco());
-                dispatcher.forward(request, response);
+            if (accao != null) {
+                if (accao.equals("delete")) {
+                    daoEndereco.excluir(user);
+                    RequestDispatcher dispatcher
+                            = request.getRequestDispatcher("/cadastroEndereco.jsp");
+                    request.setAttribute("endereco", daoEndereco.listarEndereco());
+                    dispatcher.forward(request, response);
 
-            } else if (accao.equals("edit")) {
-                BeansEndereco beansEndereco = daoEndereco.consultaEndereco(user);
-                RequestDispatcher dispatcher
-                        = request.getRequestDispatcher("/cadastroEndereco.jsp");
-                request.setAttribute("endereco", daoEndereco.listarEndereco());
-                request.setAttribute("ender", beansEndereco);
-                dispatcher.forward(request, response);
+                } else if (accao.equals("edit")) {
+                    BeansEndereco beansEndereco = daoEndereco.consultaEndereco(user);
+                    RequestDispatcher dispatcher
+                            = request.getRequestDispatcher("/cadastroEndereco.jsp");
+                    request.setAttribute("endereco", daoEndereco.listarEndereco());
+                    request.setAttribute("ender", beansEndereco);
+                    dispatcher.forward(request, response);
 
-            } else if (accao.equals("listar")) {
-                request.getSession().setAttribute("userEsco", usuario);
-                RequestDispatcher dispatcher
-                        = request.getRequestDispatcher("/cadastroEndereco.jsp");
-                request.setAttribute("endereco", daoEndereco.listarEndereco());
-                dispatcher.forward(request, response);
+                } else if (accao.equals("listar")) {
+                    request.getSession().setAttribute("userEsco", usuario);
+                    RequestDispatcher dispatcher
+                            = request.getRequestDispatcher("/cadastroEndereco.jsp");
+                    request.setAttribute("endereco", daoEndereco.listarEndereco());
+                    dispatcher.forward(request, response);
 
+                }
+            } else {
+                RequestDispatcher view
+                        = request.getRequestDispatcher("/cadastroUsuario.jsp");
+                request.setAttribute("usuarios", dao.listarUsuario());
+                view.forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();
