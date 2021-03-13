@@ -4,6 +4,7 @@
     Author     : Belmiro-Mungoi
 --%>
 
+<%@page import="beans.BeansUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -37,7 +38,7 @@
 
                 <div class="field">
                     <label for="biUser">BI</label>
-                    <input type="text" id="biUser" name="biUser" value="${user.biUser}">
+                    <input type="text" id="biUser" name="biUser" value="${user.biUser}" maxlength="13">
                 </div>
             </div>
 
@@ -46,17 +47,31 @@
 
                 <div class="field">
                     <label for="foneUser">Telefone</label>
-                    <input type="text" id="foneUser" name="foneUser" value="${user.telefone}">
+                    <input type="text" id="foneUser" name="foneUser" value="${user.telefone}" maxlength="13">
                 </div>
 
                 <div class="field">
                     <label for="nomeUser">Nome do Usuário</label>
-                    <input type="text" id="nomeUser" name="nomeUser" value="${user.nomeUser}">
+                    <input type="text" id="nomeUser" name="nomeUser" value="${user.nomeUser}" maxlength="18">
                 </div>
 
                 <div class="field">
                     <label for="pass">Senha</label>
-                    <input type="password" id="pass" name="pass" value="${user.senha}">
+                    <input type="password" id="pass" name="pass" value="${user.senha}" maxlength="10">
+                </div>
+                <div class="field">
+                    <label for="activo">Activo</label>
+                    <input type="checkbox" id="activo" name ="activo"
+                           <%
+                               if (request.getAttribute("user") != null) {
+                                   BeansUsuario user = (BeansUsuario) request.getAttribute("user");
+
+                                   if (user.isActivo()) {
+                                       out.print(" checked=\"checked\" ");
+                                   }
+                               }
+                           %>       
+                           >
                 </div>
 
             </div>    
@@ -113,7 +128,7 @@
                     <td id="td1"><c:out value="${user.telefone}"></c:out></td>
                     <td id="td1"><c:out value="${user.nomeUser}"></c:out></td>
                         <td id="td1">
-                            <a href="UsuarioServlet?accao=delete&user=${user.idUser}">
+                            <a href="UsuarioServlet?accao=delete&user=${user.idUser}" onclick="return confirm('Deseja Excluir Esse Registo?')">
                             <img src="css/img/delete.png" width="20px" height="20px" title="Exlcuir"></a>
                         <a href="UsuarioServlet?accao=edit&user=${user.idUser}">
                             <img src="css/img/edit.png" width="20px" height="20px" title="Editar"></a>
