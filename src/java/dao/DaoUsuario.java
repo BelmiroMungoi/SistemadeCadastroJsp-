@@ -26,7 +26,7 @@ public class DaoUsuario {
         try {
             String sql = "insert into usuario(nomeCompleto, biUser, telefoneUser, "
                     + "nomeUser, senhaUser, imagem, curriculo, contentType, contentTypeCv,"
-                    + " imageMin, activo) values(?,?,?,?,?,?,?,?,?,?,?)";
+                    + " imageMin, activo, perfil) values(?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.setString(1, usuario.getNomeCompleto());
             pst.setString(2, usuario.getBiUser());
@@ -39,6 +39,7 @@ public class DaoUsuario {
             pst.setString(9, usuario.getContentTypeCv());
             pst.setString(10, usuario.getImagemMini());
             pst.setBoolean(11, usuario.isActivo());
+            pst.setString(12, usuario.getPerfil());
             pst.execute();
             connection.commit();
         } catch (SQLException ex) {
@@ -73,6 +74,7 @@ public class DaoUsuario {
                 usuario.setContentTypeCv(rs.getString("contentTypeCv"));
                 usuario.setImagemMini(rs.getString("imageMin"));
                 usuario.setActivo(rs.getBoolean("activo"));
+                usuario.setPerfil(rs.getString("perfil"));
                 lista.add(usuario);
             }
         } catch (SQLException ex) {
@@ -118,6 +120,7 @@ public class DaoUsuario {
                 beansUsuario.setContentTypeCv(rs.getString("contentTypeCv"));
                 beansUsuario.setImagemMini(rs.getString("imageMin"));
                 beansUsuario.setActivo(rs.getBoolean("activo"));
+                beansUsuario.setPerfil(rs.getString("perfil"));
                 return beansUsuario;
             }
         } catch (SQLException ex) {
@@ -199,7 +202,7 @@ public class DaoUsuario {
         try {
             StringBuilder sql = new StringBuilder();
             sql.append(" update usuario set nomeCompleto = ?, biUser = ?, ");
-            sql.append(" telefoneUser = ?, nomeUser = ?, senhaUser = ?, activo = ? ");
+            sql.append(" telefoneUser = ?, nomeUser = ?, senhaUser = ?, activo = ?, perfil = ? ");
             if (usuario.isUpdateImage()) {
                 sql.append(" ,imagem = ? ");
             }
@@ -223,32 +226,33 @@ public class DaoUsuario {
             pst.setString(4, usuario.getNomeUser());
             pst.setString(5, usuario.getSenha());
             pst.setBoolean(6, usuario.isActivo());
+            pst.setString(7, usuario.getPerfil());
             if (usuario.isUpdateImage()) {
-                pst.setString(7, usuario.getImagem());
+                pst.setString(8, usuario.getImagem());
             } else if (usuario.isUpdatePdf()) {
-                pst.setString(7, usuario.getCurriculo());
-            }
-
-            if (usuario.isUpdatePdf() && usuario.isUpdateImage()) {
                 pst.setString(8, usuario.getCurriculo());
-            } else if (usuario.isUpdateImage()) {
-                pst.setString(8, usuario.getContentType());
-            }
-
-            if (usuario.isUpdateImage() && usuario.isUpdatePdf()) {
-                pst.setString(9, usuario.getContentType());
-            } else if (usuario.isUpdatePdf()) {
-                pst.setString(8, usuario.getContentTypeCv());
             }
 
             if (usuario.isUpdatePdf() && usuario.isUpdateImage()) {
-                pst.setString(10, usuario.getContentTypeCv());
+                pst.setString(9, usuario.getCurriculo());
             } else if (usuario.isUpdateImage()) {
-                pst.setString(9, usuario.getImagemMini());
+                pst.setString(9, usuario.getContentType());
             }
 
             if (usuario.isUpdateImage() && usuario.isUpdatePdf()) {
-                pst.setString(11, usuario.getImagemMini());
+                pst.setString(10, usuario.getContentType());
+            } else if (usuario.isUpdatePdf()) {
+                pst.setString(9, usuario.getContentTypeCv());
+            }
+
+            if (usuario.isUpdatePdf() && usuario.isUpdateImage()) {
+                pst.setString(11, usuario.getContentTypeCv());
+            } else if (usuario.isUpdateImage()) {
+                pst.setString(10, usuario.getImagemMini());
+            }
+
+            if (usuario.isUpdateImage() && usuario.isUpdatePdf()) {
+                pst.setString(12, usuario.getImagemMini());
             }
             pst.execute();
             connection.commit();
