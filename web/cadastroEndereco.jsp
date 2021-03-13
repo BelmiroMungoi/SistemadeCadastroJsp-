@@ -96,7 +96,7 @@
                     <td id="td1"><c:out value="${ender.mobile}"></c:out></td>
                     <td id="td1"><c:out value="${ender.nomeCompleto}"></c:out></td>>
                         <td id="td1">
-                            <a href="EnderecoServlet?accao=delete&user=${ender.idEnder}">
+                            <a href="EnderecoServlet?accao=delete&user=${ender.idEnder}" onclick="return confirm('Deseja Excluir Esse Registo?')">
                             <img src="css/img/delete.png" width="20px" height="20px" title="Exlcuir"></a>
                         <a href="EnderecoServlet?accao=edit&user=${ender.idEnder}">
                             <img src="css/img/edit.png" width="20px" height="20px" title="Editar"></a>
