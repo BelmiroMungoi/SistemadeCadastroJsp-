@@ -71,7 +71,7 @@
                     <td id="td1"><c:out value="${prod.quantProd}"></c:out></td>
                     <td id="td1"><f:formatNumber type="number" maxFractionDigits="2" value="${prod.valorProd}"/></td>
                         <td id="td1">
-                            <a href="ProdutoServlet?accao=delete&prod=${prod.idProd}">
+                            <a href="ProdutoServlet?accao=delete&prod=${prod.idProd}" onclick="return confirm('Deseja Excluir Esse Registo?')">
                             <img src="css/img/delete.png" width="20px" height="20px" title="Exlcuir"></a>
                         <a href="ProdutoServlet?accao=edit&prod=${prod.idProd}">
                             <img src="css/img/edit.png" width="20px" height="20px" title="Editar"></a>
