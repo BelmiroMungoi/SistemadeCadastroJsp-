@@ -129,6 +129,7 @@ public class UsuarioServlet extends HttpServlet {
             String fone = request.getParameter("foneUser");
             String nomeUsuario = request.getParameter("nomeUser");
             String senha = request.getParameter("pass");
+            String perfil = request.getParameter("perfil");
             BeansUsuario usuario = new BeansUsuario();
 
             usuario.setIdUser(!idUsuario.isEmpty() ? Integer.parseInt(idUsuario) : null);
@@ -137,6 +138,7 @@ public class UsuarioServlet extends HttpServlet {
             usuario.setTelefone(fone);
             usuario.setNomeUser(nomeUsuario);
             usuario.setSenha(senha);
+            usuario.setPerfil(perfil);
 
             if (request.getParameter("activo") != null
                     && request.getParameter("activo").equalsIgnoreCase("on")) {
