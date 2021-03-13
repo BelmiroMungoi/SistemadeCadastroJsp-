@@ -17,6 +17,7 @@ public class BeansUsuario {
     private String contentType;
     private String contentTypeCv;
     private String tempFoto;
+    private String perfil;
     private Integer idUser;
     private boolean updateImage = true;
     private boolean updatePdf = true;
@@ -138,6 +139,14 @@ public class BeansUsuario {
 
     public void setIdUser(Integer idUser) {
         this.idUser = idUser;
+    }
+
+    public String getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
     }
 
 }
