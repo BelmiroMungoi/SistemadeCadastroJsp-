@@ -138,6 +138,13 @@ public class UsuarioServlet extends HttpServlet {
             usuario.setNomeUser(nomeUsuario);
             usuario.setSenha(senha);
 
+            if (request.getParameter("activo") != null
+                    && request.getParameter("activo").equalsIgnoreCase("on")) {
+                usuario.setActivo(true);
+            } else {
+                usuario.setActivo(false);
+            }
+
             try {
                 //Inicio doCodigo para carregar ficheiros(fotos/pdfs) da base de dados
                 if (ServletFileUpload.isMultipartContent(request)) { //Verifica se e um form de upload
@@ -167,10 +174,10 @@ public class UsuarioServlet extends HttpServlet {
                         gd.dispose();
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         ImageIO.write(newImage, "png", baos);
-                        
+
                         String minBase64 = "data:image/png;base64,"
                                 + DatatypeConverter.printBase64Binary(baos.toByteArray());
-                        
+
                         usuario.setImagemMini(minBase64);
                         //Fim do codigo de compactar a imagem
                     } else {
