@@ -20,6 +20,7 @@ public class BeansUsuario {
     private Integer idUser;
     private boolean updateImage = true;
     private boolean updatePdf = true;
+    private boolean activo;
 
     public String getTempFoto() {
         tempFoto = "data:" + contentType + ";base64," + imagem;
@@ -29,6 +30,14 @@ public class BeansUsuario {
 
     public boolean isUpdateImage() {
         return updateImage;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public void setUpdateImage(boolean updateImage) {
