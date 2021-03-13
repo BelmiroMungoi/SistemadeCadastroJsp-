@@ -82,12 +82,10 @@ form input[type = "password"]{
 #nomeFull{
     width: 420px;
 }
-#foneUser{
-    width: 210px;
-}
+
 
 #pass{
-    width: 230px;
+    width: 200px;
 }
 
 #salvar{
