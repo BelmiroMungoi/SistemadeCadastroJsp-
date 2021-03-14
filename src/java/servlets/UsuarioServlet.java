@@ -44,24 +44,20 @@ public class UsuarioServlet extends HttpServlet {
             String accao = request.getParameter("accao") != null ? request.getParameter("accao") : "listar";
             String id = request.getParameter("user");
 
+            RequestDispatcher view
+                    = request.getRequestDispatcher("/cadastroUsuario.jsp");
             if (accao.equals("delete")) {
                 daoUsuario.excluir(id);
-                RequestDispatcher view
-                        = request.getRequestDispatcher("/cadastroUsuario.jsp");
                 request.setAttribute("usuarios", daoUsuario.listarUsuario());
                 view.forward(request, response);
 
             } else if (accao.equals("edit")) {
                 BeansUsuario beansUsuario = daoUsuario.consulta(id);
-                RequestDispatcher view
-                        = request.getRequestDispatcher("/cadastroUsuario.jsp");
                 request.setAttribute("user", beansUsuario);
                 request.setAttribute("usuarios", daoUsuario.listarUsuario());
                 view.forward(request, response);
 
             } else if (accao.equals("listar")) {
-                RequestDispatcher view
-                        = request.getRequestDispatcher("/cadastroUsuario.jsp");
                 request.setAttribute("usuarios", daoUsuario.listarUsuario());
                 view.forward(request, response);
 
