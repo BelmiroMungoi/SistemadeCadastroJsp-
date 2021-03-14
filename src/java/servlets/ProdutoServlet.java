@@ -1,6 +1,7 @@
 package servlets;
 
 import beans.BeansProduto;
+import dao.DaoCategoria;
 import dao.DaoProduto;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ProdutoServlet extends HttpServlet {
 
     DaoProduto daoProduto = new DaoProduto();
+    DaoCategoria daoCategoria = new DaoCategoria();
 
     public ProdutoServlet() {
         super();
@@ -27,30 +29,26 @@ public class ProdutoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String accao = request.getParameter("accao") != null ? request.getParameter("accao"): "listar";
+        String accao = request.getParameter("accao") != null ? request.getParameter("accao") : "listar";
         String id = request.getParameter("prod");
 
+        RequestDispatcher view
+                = request.getRequestDispatcher("/cadastroProduto.jsp");
+        request.setAttribute("categorias", daoCategoria.listarCategoria());
         if (accao.equals("delete")) {
             daoProduto.excluir(id);
-            RequestDispatcher view
-                    = request.getRequestDispatcher("/cadastroProduto.jsp");
             request.setAttribute("produtos", daoProduto.listarProduto());
-            view.forward(request, response);
 
         } else if (accao.equals("edit")) {
             BeansProduto beansProduto = daoProduto.consulta(id);
-            RequestDispatcher view
-                    = request.getRequestDispatcher("/cadastroProduto.jsp");
             request.setAttribute("prod", beansProduto);
             request.setAttribute("produtos", daoProduto.listarProduto());
-            view.forward(request, response);
 
         } else if (accao.equals("listar")) {
-            RequestDispatcher view
-                    = request.getRequestDispatcher("/cadastroProduto.jsp");
             request.setAttribute("produtos", daoProduto.listarProduto());
-            view.forward(request, response);
+
         }
+        view.forward(request, response);
     }
 
     @Override
@@ -63,6 +61,7 @@ public class ProdutoServlet extends HttpServlet {
             RequestDispatcher view
                     = request.getRequestDispatcher("/cadastroProduto.jsp");
             request.setAttribute("produtos", daoProduto.listarProduto());
+            request.setAttribute("categorias", daoCategoria.listarCategoria());
             view.forward(request, response);
         } else {
 
@@ -74,16 +73,16 @@ public class ProdutoServlet extends HttpServlet {
             BeansProduto produto = new BeansProduto();
             produto.setIdProd(!idProd.isEmpty() ? Long.parseLong(idProd) : null);
             produto.setNomeProd(nomeProd);
-            
+
             if (quantProd != null && !quantProd.isEmpty()) {
                 produto.setQuantProd(Integer.parseInt(quantProd));
-                
+
             }
             if (valorProd != null && !valorProd.isEmpty()) {
                 String valor = valorProd.replaceAll("\\,", "");
                 //valor = valor.replaceAll("\\", ".");
                 produto.setValorProd(Float.parseFloat(valor));
-                
+
             }
             boolean podeInserir = true;
 
@@ -109,7 +108,7 @@ public class ProdutoServlet extends HttpServlet {
                 daoProduto.salvarProduto(produto);
 
             } else if (idProd != null && !idProd.isEmpty()) {
-                
+
                 if (!daoProduto.validarProdutoUpdate(nomeProd, idProd)) {
                     request.setAttribute("msg", "Nome de Produto ja Existe!!!");
                     podeInserir = false;
@@ -127,6 +126,7 @@ public class ProdutoServlet extends HttpServlet {
             try {
                 RequestDispatcher view = request.getRequestDispatcher("/cadastroProduto.jsp");// para continuar na mesma pagina
                 request.setAttribute("produtos", daoProduto.listarProduto());// para exibir os dados na pag  
+                request.setAttribute("categorias", daoCategoria.listarCategoria());
                 view.forward(request, response);
             } catch (Exception e) {
                 e.printStackTrace();
