@@ -53,11 +53,31 @@ public class DaoUsuario {
 
     }
 
+    /**
+     * Metodo responsavel pela pesquisa do usuario
+     * @param pesquisa: recebe o nome a ser pesquisado
+     * @return consultaUsuario(sql): traz os dados do usuario que foi pesquisado 
+     */
+    public List<BeansUsuario> pesquisaUsuario(String pesquisa) {
+        String sql = "select *from usuario where nomeUser <> 'admin'"
+                + " and nomeCompleto like '%" + pesquisa + "%'";
+        return consultaUsuario(sql);
+    }
+
     //Metodos responsavel em carregar os dados da bd  
     public List<BeansUsuario> listarUsuario() {
-        List<BeansUsuario> lista = new ArrayList<BeansUsuario>();
+        String sql = "select *from usuario where nomeUser <> 'admin' ";
+        return consultaUsuario(sql);
+    }
+
+    /**
+    * Metodo responsavel por executar o sql para a listagem e pesquisa de dados de usuario
+    * @param sql: recebe o sql a ser executado
+    * @return lista: retorna uma lista de usuarios que estao no banco
+    */
+    private List<BeansUsuario> consultaUsuario(String sql) {
+        List<BeansUsuario> lista = new ArrayList<>();
         try {
-            String sql = "select *from usuario where nomeUser <> 'admin' ";
             PreparedStatement pst = connection.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
