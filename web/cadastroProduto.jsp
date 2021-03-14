@@ -31,9 +31,21 @@
                 <label for="idProd">ID</label>
                 <input type="text" id="idProd" name="idProd" value="${prod.idProd}" readonly="readonly">
             </div>
-            <div class="field">
-                <label for="nomeProd">Nome do Produto</label>
-                <input type="text" id="nomeProd" name="nomeProd" value="${prod.nomeProd}">
+            <div class="field-group">
+                <div class="field">
+                    <label for="nomeProd">Nome do Produto</label>
+                    <input type="text" id="nomeProd" name="nomeProd" value="${prod.nomeProd}">
+                </div>
+                <div class="field">
+                    <label for="categorias">Categoria do Produto</label>
+                    <select id="categorias" name="categorias">
+                        <c:forEach items="${categorias}" var="cat">
+                            <option value="${cat.idCat}" id="${cat.idCat}">
+                                ${cat.nomeCat}
+                            </option>
+                        </c:forEach> 
+                    </select>
+                </div>
             </div>
             <div class="field">
                 <div class="field-group">
@@ -70,8 +82,8 @@
                     <td id="td1"><c:out value="${prod.nomeProd}"></c:out></td>
                     <td id="td1"><c:out value="${prod.quantProd}"></c:out></td>
                     <td id="td1"><f:formatNumber type="number" maxFractionDigits="2" value="${prod.valorProd}"/></td>
-                        <td id="td1">
-                            <a href="ProdutoServlet?accao=delete&prod=${prod.idProd}" onclick="return confirm('Deseja Excluir Esse Registo?')">
+                    <td id="td1">
+                        <a href="ProdutoServlet?accao=delete&prod=${prod.idProd}" onclick="return confirm('Deseja Excluir Esse Registo?')">
                             <img src="css/img/delete.png" width="20px" height="20px" title="Exlcuir"></a>
                         <a href="ProdutoServlet?accao=edit&prod=${prod.idProd}">
                             <img src="css/img/edit.png" width="20px" height="20px" title="Editar"></a>
