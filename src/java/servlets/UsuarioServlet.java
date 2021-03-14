@@ -122,7 +122,6 @@ public class UsuarioServlet extends HttpServlet {
                 e.printStackTrace();
             }
         } else {
-
             String idUsuario = request.getParameter("idUser");
             String nomeComp = request.getParameter("nomeFull");
             String biUsuario = request.getParameter("biUser");
