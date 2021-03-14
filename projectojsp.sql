@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13-Mar-2021 às 22:50
+-- Tempo de geração: 14-Mar-2021 às 10:45
 -- Versão do servidor: 10.4.11-MariaDB
 -- versão do PHP: 7.4.3
 
@@ -21,6 +21,17 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `projectojsp`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `categoria`
+--
+
+CREATE TABLE `categoria` (
+  `idCat` int(11) NOT NULL,
+  `nomeCat` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -48,7 +59,8 @@ CREATE TABLE `produto` (
   `idProd` int(11) NOT NULL,
   `nomeProd` varchar(150) NOT NULL,
   `quantProd` int(10) NOT NULL,
-  `valorProd` decimal(18,2) NOT NULL
+  `valorProd` decimal(18,2) NOT NULL,
+  `categoria_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -78,6 +90,12 @@ CREATE TABLE `usuario` (
 --
 
 --
+-- Índices para tabela `categoria`
+--
+ALTER TABLE `categoria`
+  ADD PRIMARY KEY (`idCat`);
+
+--
 -- Índices para tabela `endereco`
 --
 ALTER TABLE `endereco`
@@ -88,7 +106,8 @@ ALTER TABLE `endereco`
 -- Índices para tabela `produto`
 --
 ALTER TABLE `produto`
-  ADD PRIMARY KEY (`idProd`);
+  ADD PRIMARY KEY (`idProd`),
+  ADD KEY `categoria_id` (`categoria_id`);
 
 --
 -- Índices para tabela `usuario`
@@ -99,6 +118,12 @@ ALTER TABLE `usuario`
 --
 -- AUTO_INCREMENT de tabelas despejadas
 --
+
+--
+-- AUTO_INCREMENT de tabela `categoria`
+--
+ALTER TABLE `categoria`
+  MODIFY `idCat` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `endereco`
@@ -127,6 +152,12 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `endereco`
   ADD CONSTRAINT `endereco_ibfk_1` FOREIGN KEY (`enderecoId`) REFERENCES `usuario` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limitadores para a tabela `produto`
+--
+ALTER TABLE `produto`
+  ADD CONSTRAINT `produto_ibfk_1` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`idCat`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
