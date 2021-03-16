@@ -4,12 +4,13 @@ package beans;
  *
  * @author Belmiro-Mungoi
  */
-public class BeansProduto {
+public class BeansProduto extends BeansCategoria{
 
     private Long idProd;
     private String nomeProd;
     private Integer quantProd;
     private Float valorProd;
+    private Integer categoriaId;
 
     public Long getIdProd() {
         return idProd;
@@ -41,6 +42,14 @@ public class BeansProduto {
 
     public void setValorProd(Float valorProd) {
         this.valorProd = valorProd;
+    }
+
+    public Integer getCategoriaId() {
+        return categoriaId;
+    }
+
+    public void setCategoriaId(Integer categoriaId) {
+        this.categoriaId = categoriaId;
     }
 
 }
