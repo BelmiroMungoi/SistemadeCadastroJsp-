@@ -24,11 +24,12 @@ public class DaoProduto {
     //Metodo responsavel pela insercao de dados na bd
     public void salvarProduto(BeansProduto produto) {
         try {
-            String sql = "insert into produto(nomeProd, quantProd, valorProd) values(?,?,?)";
+            String sql = "insert into produto(nomeProd, quantProd, valorProd, categoria_id) values(?,?,?,?)";
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.setString(1, produto.getNomeProd());
             pst.setInt(2, produto.getQuantProd());
             pst.setFloat(3, produto.getValorProd());
+            pst.setInt(4, produto.getCategoriaId());
             pst.execute();
             connection.commit();
         } catch (SQLException ex) {
@@ -46,7 +47,7 @@ public class DaoProduto {
     public List<BeansProduto> listarProduto() {
         List<BeansProduto> lista = new ArrayList<BeansProduto>();
         try {
-            String sql = "select *from produto";
+            String sql = "select *from produto inner join categoria on categoria_id = idCat";
             PreparedStatement pst = connection.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
@@ -55,6 +56,7 @@ public class DaoProduto {
                 produto.setNomeProd(rs.getString("nomeProd"));
                 produto.setQuantProd(rs.getInt("quantProd"));
                 produto.setValorProd(rs.getFloat("valorProd"));
+                produto.setCategoriaId(rs.getInt("categoria_id"));
                 lista.add(produto);
             }
         } catch (SQLException ex) {
@@ -66,13 +68,14 @@ public class DaoProduto {
     // Metodo responsavel pela actualizacao de dados.
     public void actualiza(BeansProduto produto) {
         try {
-            String sql = "update produto set nomeProd = ?, quantProd = ?, valorProd = ?"
-                    + "where idProd = ?";
+            String sql = "update produto set nomeProd = ?, quantProd = ?, valorProd = ?,"
+                    + " categoria_id = ? where idProd = ?";
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.setString(1, produto.getNomeProd());
             pst.setInt(2, produto.getQuantProd());
             pst.setFloat(3, produto.getValorProd());
-            pst.setLong(4, produto.getIdProd());
+            pst.setInt(4, produto.getCategoriaId());
+            pst.setLong(5, produto.getIdProd());
             pst.execute();
             connection.commit();
         } catch (SQLException ex) {
@@ -87,7 +90,8 @@ public class DaoProduto {
     //Metodo que busca dados para a actualizacao 
     public BeansProduto consulta(String id) {
         try {
-            String sql = "select *from produto where idProd = '" + id + "'";
+            String sql = "select *from produto  inner join categoria on categoria_id"
+                    + " = idCat where idProd = '" + id + "'";
             PreparedStatement pst = connection.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
@@ -96,6 +100,7 @@ public class DaoProduto {
                 beansProduto.setNomeProd(rs.getString("nomeProd"));
                 beansProduto.setQuantProd(rs.getInt("quantProd"));
                 beansProduto.setValorProd(rs.getFloat("valorProd"));
+                beansProduto.setCategoriaId(rs.getInt("categoria_id"));
                 return beansProduto;
             }
         } catch (SQLException ex) {
@@ -107,7 +112,7 @@ public class DaoProduto {
     //Metodo que deleta dados
     public void excluir(String id) {
         try {
-            String sql = "delete from produto where idProd = '"+id+"'";
+            String sql = "delete from produto where idProd = '" + id + "'";
             PreparedStatement pst = connection.prepareStatement(sql);
             pst.execute();
             connection.commit();
@@ -118,7 +123,7 @@ public class DaoProduto {
                 e.printStackTrace();
             }
         }
-        
+
     }
 
     /*Metodo responsavel pela validacao do nome de produto
@@ -128,10 +133,10 @@ public class DaoProduto {
      */
     public boolean validarProduto(String nomeProd) {
         try {
-            String sql = "select count(1) as qtd from produto where nomeProd = '"+nomeProd+"'";
+            String sql = "select count(1) as qtd from produto where nomeProd = '" + nomeProd + "'";
             PreparedStatement pst = connection.prepareStatement(sql);
             ResultSet resultSet = pst.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 return resultSet.getInt("qtd") <= 0;
             }
         } catch (SQLException ex) {
@@ -143,10 +148,10 @@ public class DaoProduto {
     //Metodo responsavel pela validacao na hora da actualizacao
     public boolean validarProdutoUpdate(String nomeProd, String idProd) {
         try {
-            String sql = "select count(1) as qtd from produto where nomeProd = '"+nomeProd+"' and idProd <>"+idProd;
+            String sql = "select count(1) as qtd from produto where nomeProd = '" + nomeProd + "' and idProd <>" + idProd;
             PreparedStatement pst = connection.prepareStatement(sql);
             ResultSet resultSet = pst.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 return resultSet.getInt("qtd") <= 0;
             }
         } catch (SQLException e) {
