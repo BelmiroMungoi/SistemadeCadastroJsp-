@@ -69,10 +69,12 @@ public class ProdutoServlet extends HttpServlet {
             String nomeProd = request.getParameter("nomeProd");
             String quantProd = request.getParameter("quantProd");
             String valorProd = request.getParameter("valorProd");
+            String categoriaId = request.getParameter("categorias");
 
             BeansProduto produto = new BeansProduto();
             produto.setIdProd(!idProd.isEmpty() ? Long.parseLong(idProd) : null);
             produto.setNomeProd(nomeProd);
+            produto.setCategoriaId(Integer.parseInt(categoriaId));
 
             if (quantProd != null && !quantProd.isEmpty()) {
                 produto.setQuantProd(Integer.parseInt(quantProd));
