@@ -40,8 +40,12 @@
                     <label for="categorias">Categoria do Produto</label>
                     <select id="categorias" name="categorias">
                         <c:forEach items="${categorias}" var="cat">
-                            <option value="${cat.idCat}" id="${cat.idCat}">
-                                ${cat.nomeCat}
+                            <option value="${cat.idCat}" id="${cat.idCat}"
+                                    <c:if test="${cat.idCat == prod.categoriaId}">
+                                        <c:out value="selected=selected"/>
+                                    </c:if>    
+                                        >
+                                    ${cat.nomeCat}
                             </option>
                         </c:forEach> 
                     </select>
