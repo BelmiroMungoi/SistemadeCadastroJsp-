@@ -72,6 +72,8 @@
             </div>
             <button type="submit" id="salvar"
                     onclick="return validarCampos() ? true : false">Salvar</button>
+                <button type="submit" id="voltar" onclick="document.getElementById('formEndereco').action
+                            = 'EnderecoServlet?accao=voltar'">Voltar</button>
         </form>
     <center>
         <table id="table1">
@@ -94,7 +96,7 @@
                     <td id="td1"><c:out value="${ender.mobile}"></c:out></td>
                     <td id="td1"><c:out value="${ender.nomeCompleto}"></c:out></td>>
                         <td id="td1">
-                            <a href="EnderecoServlet?accao=delete&user=${ender.idEnder}">
+                            <a href="EnderecoServlet?accao=delete&user=${ender.idEnder}" onclick="return confirm('Deseja Excluir Esse Registo?')">
                             <img src="css/img/delete.png" width="20px" height="20px" title="Exlcuir"></a>
                         <a href="EnderecoServlet?accao=edit&user=${ender.idEnder}">
                             <img src="css/img/edit.png" width="20px" height="20px" title="Editar"></a>

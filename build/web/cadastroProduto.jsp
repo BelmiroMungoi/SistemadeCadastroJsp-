@@ -6,11 +6,14 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="f" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/cadastroProduto.css">
+        <script src="js/jquery.min.js" type="text/javascript"></script>
+        <script src="js/jquery.maskMoney.min.js" type="text/javascript"></script>
         <title>Cadastro de Produto</title>
     </head>
     <body>
@@ -28,19 +31,36 @@
                 <label for="idProd">ID</label>
                 <input type="text" id="idProd" name="idProd" value="${prod.idProd}" readonly="readonly">
             </div>
-            <div class="field">
-                <label for="nomeProd">Nome do Produto</label>
-                <input type="text" id="nomeProd" name="nomeProd" value="${prod.nomeProd}">
+            <div class="field-group">
+                <div class="field">
+                    <label for="nomeProd">Nome do Produto</label>
+                    <input type="text" id="nomeProd" name="nomeProd" value="${prod.nomeProd}">
+                </div>
+                <div class="field">
+                    <label for="categorias">Categoria do Produto</label>
+                    <select id="categorias" name="categorias">
+                        <c:forEach items="${categorias}" var="cat">
+                            <option value="${cat.idCat}" id="${cat.idCat}"
+                                    <c:if test="${cat.idCat == prod.categoriaId}">
+                                        <c:out value="selected=selected"/>
+                                    </c:if>    
+                                        >
+                                    ${cat.nomeCat}
+                            </option>
+                        </c:forEach> 
+                    </select>
+                </div>
             </div>
             <div class="field">
                 <div class="field-group">
                     <div class="field">
                         <label for="quantProd">Quantidade</label>
-                        <input type="text" id="quantProd" name="quantProd" value="${prod.quantProd}">
+                        <input type="number" id="quantProd" name="quantProd" value="${prod.quantProd}">
                     </div>
                     <div class="field">
                         <label for="valorProd">Valor(MZN)</label>
-                        <input type="text" id="valorProd" name="valorProd" value="${prod.valorProd}">
+                        <input type="text" id="valorProdd" name="valorProd" data-thousands=","
+                               data-decimal="." value="${prod.valorProd}">
                     </div>
                 </div>
             </div>
@@ -65,9 +85,9 @@
                     <td id="td1"><c:out value="${prod.idProd}"></c:out></td>
                     <td id="td1"><c:out value="${prod.nomeProd}"></c:out></td>
                     <td id="td1"><c:out value="${prod.quantProd}"></c:out></td>
-                    <td id="td1"><c:out value="${prod.valorProd}"></c:out></td>
-                        <td id="td1">
-                            <a href="ProdutoServlet?accao=delete&prod=${prod.idProd}">
+                    <td id="td1"><f:formatNumber type="number" maxFractionDigits="2" value="${prod.valorProd}"/></td>
+                    <td id="td1">
+                        <a href="ProdutoServlet?accao=delete&prod=${prod.idProd}" onclick="return confirm('Deseja Excluir Esse Registo?')">
                             <img src="css/img/delete.png" width="20px" height="20px" title="Exlcuir"></a>
                         <a href="ProdutoServlet?accao=edit&prod=${prod.idProd}">
                             <img src="css/img/edit.png" width="20px" height="20px" title="Editar"></a>
@@ -96,6 +116,11 @@
             }
             return true;
         }
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('#valorProdd').maskMoney();
+        })
     </script>
 </body>
 </html>

@@ -89,7 +89,7 @@ form input[type="password"]
 }
 
 #salvar{
-    width: 150px;
+    width: 130px;
     height: 35px;
     background-color: darkcyan;
     border-radius: 8px;
@@ -104,8 +104,8 @@ form input[type="password"]
     background-color: darkseagreen;
 }
 
-#canc{
-    width: 150px;
+#voltar{
+    width: 130px;
     height: 35px;
     background-color: #ff4040;
     border-radius: 8px;
@@ -116,7 +116,7 @@ form input[type="password"]
     margin-bottom: -10px;
 }
 
-#canc:hover{
+#voltar:hover{
     background-color: darkred;
 }
 

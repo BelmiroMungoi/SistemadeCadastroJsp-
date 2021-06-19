@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
@@ -18,15 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Banco de dados: `projectojsp`
---
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `categoria`
---
+CREATE DATABASE projectojsp;
 
 CREATE TABLE `categoria` (
   `idCat` int(11) NOT NULL,
@@ -35,9 +27,6 @@ CREATE TABLE `categoria` (
 
 -- --------------------------------------------------------
 
---
--- Estrutura da tabela `endereco`
---
 
 CREATE TABLE `endereco` (
   `idEndereco` int(11) NOT NULL,
@@ -51,9 +40,6 @@ CREATE TABLE `endereco` (
 
 -- --------------------------------------------------------
 
---
--- Estrutura da tabela `produto`
---
 
 CREATE TABLE `produto` (
   `idProd` int(11) NOT NULL,
@@ -65,9 +51,6 @@ CREATE TABLE `produto` (
 
 -- --------------------------------------------------------
 
---
--- Estrutura da tabela `usuario`
---
 
 CREATE TABLE `usuario` (
   `idUser` int(11) NOT NULL,
@@ -89,29 +72,21 @@ CREATE TABLE `usuario` (
 -- Índices para tabelas despejadas
 --
 
---
--- Índices para tabela `categoria`
---
+
 ALTER TABLE `categoria`
   ADD PRIMARY KEY (`idCat`);
 
---
--- Índices para tabela `endereco`
---
+
 ALTER TABLE `endereco`
   ADD PRIMARY KEY (`idEndereco`),
   ADD KEY `enderecoId` (`enderecoId`);
 
---
--- Índices para tabela `produto`
---
+
 ALTER TABLE `produto`
   ADD PRIMARY KEY (`idProd`),
   ADD KEY `categoria_id` (`categoria_id`);
 
---
--- Índices para tabela `usuario`
---
+
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`idUser`);
 
@@ -119,27 +94,16 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabelas despejadas
 --
 
---
--- AUTO_INCREMENT de tabela `categoria`
---
 ALTER TABLE `categoria`
   MODIFY `idCat` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT de tabela `endereco`
---
+
 ALTER TABLE `endereco`
   MODIFY `idEndereco` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT de tabela `produto`
---
 ALTER TABLE `produto`
   MODIFY `idProd` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT de tabela `usuario`
---
 ALTER TABLE `usuario`
   MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT;
 
@@ -147,15 +111,10 @@ ALTER TABLE `usuario`
 -- Restrições para despejos de tabelas
 --
 
---
--- Limitadores para a tabela `endereco`
---
+
 ALTER TABLE `endereco`
   ADD CONSTRAINT `endereco_ibfk_1` FOREIGN KEY (`enderecoId`) REFERENCES `usuario` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Limitadores para a tabela `produto`
---
 ALTER TABLE `produto`
   ADD CONSTRAINT `produto_ibfk_1` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`idCat`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
